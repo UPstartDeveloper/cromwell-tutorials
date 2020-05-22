@@ -1,0 +1,36 @@
+#!/bin/bash
+
+cd /Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/execution
+tmpDir=$(mkdir -p "/Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/tmp.542a26f9" && echo "/Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/tmp.542a26f9")
+
+export _JAVA_OPTIONS=-Djava.io.tmpdir="$tmpDir"
+export TMPDIR="$tmpDir"
+export HOME="$HOME"
+(
+cd /Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/execution
+
+)
+outf990c775="${tmpDir}/out.$$" errf990c775="${tmpDir}/err.$$"
+mkfifo "$outf990c775" "$errf990c775"
+trap 'rm "$outf990c775" "$errf990c775"' EXIT
+tee '/Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/execution/stdout' < "$outf990c775" &
+tee '/Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/execution/stderr' < "$errf990c775" >&2 &
+(
+cd /Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/execution
+
+
+echo "hello world"
+)  > "$outf990c775" 2> "$errf990c775"
+echo $? > /Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/execution/rc.tmp
+(
+# add a .file in every empty directory to facilitate directory delocalization on the cloud
+cd /Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/execution
+find . -type d -exec sh -c '[ -z "$(ls -A '"'"'{}'"'"')" ] && touch '"'"'{}'"'"'/.file' \;
+)
+(
+cd /Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/execution
+sync
+
+
+)
+mv /Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/execution/rc.tmp /Users/zainraza/Desktop/Cromwell/cromwell-executions/myWorkflow/f990c775-1b67-46a1-b706-4fcc1867f7e0/call-myTask/execution/rc
