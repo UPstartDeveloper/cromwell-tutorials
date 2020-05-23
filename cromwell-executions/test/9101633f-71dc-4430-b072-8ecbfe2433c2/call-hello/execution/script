@@ -1,0 +1,36 @@
+#!/bin/bash
+
+cd /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/execution
+tmpDir=$(mkdir -p "/Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/tmp.01e280f6" && echo "/Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/tmp.01e280f6")
+
+export _JAVA_OPTIONS=-Djava.io.tmpdir="$tmpDir"
+export TMPDIR="$tmpDir"
+export HOME="$HOME"
+(
+cd /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/execution
+
+)
+out9101633f="${tmpDir}/out.$$" err9101633f="${tmpDir}/err.$$"
+mkfifo "$out9101633f" "$err9101633f"
+trap 'rm "$out9101633f" "$err9101633f"' EXIT
+tee '/Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/execution/stdout' < "$out9101633f" &
+tee '/Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/execution/stderr' < "$err9101633f" >&2 &
+(
+cd /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/execution
+
+
+echo 'Hello World!'
+)  > "$out9101633f" 2> "$err9101633f"
+echo $? > /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/execution/rc.tmp
+(
+# add a .file in every empty directory to facilitate directory delocalization on the cloud
+cd /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/execution
+find . -type d -exec sh -c '[ -z "$(ls -A '"'"'{}'"'"')" ] && touch '"'"'{}'"'"'/.file' \;
+)
+(
+cd /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/execution
+sync
+
+
+)
+mv /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/execution/rc.tmp /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/test/9101633f-71dc-4430-b072-8ecbfe2433c2/call-hello/execution/rc

@@ -1,0 +1,37 @@
+#!/bin/bash
+
+cd /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/execution
+tmpDir=$(mkdir -p "/Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/tmp.9ec32c7f" && echo "/Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/tmp.9ec32c7f")
+
+export _JAVA_OPTIONS=-Djava.io.tmpdir="$tmpDir"
+export TMPDIR="$tmpDir"
+export HOME="$HOME"
+(
+cd /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/execution
+
+)
+out2dd19ece="${tmpDir}/out.$$" err2dd19ece="${tmpDir}/err.$$"
+mkfifo "$out2dd19ece" "$err2dd19ece"
+trap 'rm "$out2dd19ece" "$err2dd19ece"' EXIT
+tee '/Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/execution/stdout' < "$out2dd19ece" &
+tee '/Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/execution/stderr' < "$err2dd19ece" >&2 &
+(
+cd /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/execution
+
+
+echo "I slept for 3"
+sleep 3
+)  > "$out2dd19ece" 2> "$err2dd19ece"
+echo $? > /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/execution/rc.tmp
+(
+# add a .file in every empty directory to facilitate directory delocalization on the cloud
+cd /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/execution
+find . -type d -exec sh -c '[ -z "$(ls -A '"'"'{}'"'"')" ] && touch '"'"'{}'"'"'/.file' \;
+)
+(
+cd /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/execution
+sync
+
+
+)
+mv /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/execution/rc.tmp /Users/zainraza/Downloads/dev/miscell/tutorials_and_random/Cromwell/cromwell-executions/timingWorkflow/2dd19ece-0fbc-4451-8e24-66791d42a9c1/call-sleep/shard-3/execution/rc
